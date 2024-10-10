@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "QuanLyTaiKhoan";
+}
+
+<div class="title-account-manager">
+    <h5>Danh sách tài khoản</h5>
+</div>
+<div class="content-account-manager">
+    <div class="find-account">
+        <select name="role" id="role" class="form-control form-control-lg">
+            <option value="">Chọn quyền </option>
+            @foreach (var itemrole in Model)
+            {
+                <option value="@itemrole.role_id">@itemrole.role_name</option>
+            }
+        </select>
+        <button class="bt-find-account" type="submit"><i class="hoverButton"></i>Tìm kiếm</button>
+    </div>
+    <div class="form-list-account-manager">
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("HienThiNguoiDungTheoQuyen", "Manager")',
+            type: 'GET',
+            data: { id: 3 },
+            success: function (response) {
+                $('.form-list-account-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải .');
+            }
+        });
+         $('.bt-find-account').on('click', function (e) {
+            e.preventDefault();
+
+             var user_role = $('#role').val();
+            
+
+           
+
+            $.ajax({
+                url: '@Url.Action("HienThiNguoiDungTheoQuyen", "Manager")',
+                type: 'GET',
+                data: { id: user_role },
+                success: function (response) {
+                    $('.form-list-account-manager').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải .');
+                }
+            });
+
+        });
+
+
+    });
+</script>
+

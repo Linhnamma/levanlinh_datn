@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "HienThiSanPhamTheoDM";
+}
+<div class="price-content box-shadow">
+    <div id="subcategory-content" style="margin-left:20px;">
+       
+        <div class="subcate " data-price-range="under-1-million">< 1 triệu</div>
+        <div class="subcate " data-price-range="1-2-million">1 - 2 triệu</div>
+        <div class="subcate "data-price-range="2-5-million">2 - 5 triệu</div>
+        <div class="subcate " data-price-range="above-5-million">> 5 triệu</div>
+    </div>
+</div>
+<div class="section-product">
+    <div class="container">
+        <div class="row">
+            <div class="list-product" id="product-list">
+
+                @foreach (var item in Model)
+                {
+
+                    <a href="@Url.Action("ChiTietSanPham", "Products", new { id = item.product_id })" class="product-link">
+                        <div class="product-item box-shadow background" data-price="@item.price">
+                            <img class="item-img" src="@Url.Content("~/Image/" + @item.pic_name)" alt="product image" />
+
+                            <div class="item-body">
+                                <h3 class="item-name">@item.product_name</h3>
+                                <p class="item-price">@item.price VND</p>
+                            </div>
+                        </div>
+                    </a>
+
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        // Lọc sản phẩm theo khoảng giá
+        $('.subcate').click(function (e) {
+            e.preventDefault();
+
+            // Xóa class 'selected-page' khỏi tất cả các subcate
+            $('.subcate').removeClass('selected-page');
+            $(this).addClass('selected-page');
+
+            // Lấy khoảng giá từ thuộc tính data-price-range của button
+            var priceRange = $(this).data('price-range');
+
+            // Lọc sản phẩm theo khoảng giá
+            $('.product-item').each(function () {
+                var price = $(this).data('price');
+                var show = false;
+
+                switch (priceRange) {
+                    
+                    case 'under-1-million':
+                        show = price < 1000000;
+                        break;
+                    case '1-2-million':
+                        show = price >= 1000000 && price < 2000000;
+                        break;
+                    case '2-5-million':
+                        show = price >= 2000000 && price < 5000000;
+                        break;
+                    case 'above-5-million':
+                        show = price >= 5000000;
+                        break;
+                    default:
+                        show = true; // Hiển thị tất cả sản phẩm
+                        break;
+                }
+
+                // Hiển thị hoặc ẩn sản phẩm dựa trên điều kiện lọc
+                $(this).toggle(show);
+            });
+        });
+    });
+
+        // Sắp xếp sản phẩm theo giá
+        
+</script>

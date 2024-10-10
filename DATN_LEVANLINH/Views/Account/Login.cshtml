@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+<section class="bread-crumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="home">
+                <a href="/"><span>Trang chủ</span></a>
+                <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+            </li>
+
+            <li>
+                <strong><span>Đăng nhập tài khoản</span></strong>
+
+            </li>
+
+        </ul>
+    </div>
+
+</section>
+<div class="section-login-signup">
+    <div class="container">
+        <div class="row-login-signup">
+            <div class="wpx">
+                <h1 class="title_heads a-center"><span>Đăng nhập</span></h1>
+                <span class="a-center">
+                    Nếu bạn chưa có tài khoản,
+                    <a href="/Account/Signup">
+                        đăng ký tại đây
+                    </a>
+                </span>
+                <div class="form-login">
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="user_name" id="user_name" placeholder="Tên đăng nhập" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" value="" name="password" id="password" placeholder="Mật khẩu" required="">
+                    </fieldset>
+                    <div class="pull-xs-left">
+                        <input class="bt" type="submit" value="Đăng nhập">
+                        <span class="block a-center quenmk">Quên mật khẩu</span>
+                    </div>
+                   
+                </div>
+                <div class="form-login form-quenmk  ">
+                    <fieldset class="form-group">
+                        <input type="email" value="" name="email" id="email" placeholder="Email" required="">
+                    </fieldset>
+
+                    <div class="pull-xs-left">
+                        <input  type="submit" value="Lấy lại mật khẩu">
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type="submit"]').click(function (e) {
+            e.preventDefault(); // Ngăn chặn việc submit form mặc định
+
+            var user_name = $('#user_name').val();
+            var password = $('#password').val();
+
+            $.ajax({
+                url: '/Account/Login', // URL của Action Login
+                type: 'POST',
+                data: {
+                    user_name: user_name,
+                    password: password
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // Phân quyền dựa vào role_id
+                        if (response.role_id == 1) {
+                            // Chuyển hướng tới trang Home/Index nếu là quản trị viên
+                            window.location.href = "/Manager/Index";
+                        } else if (response.role_id == 3) {
+                            // Chuyển hướng tới trang Manager/Index nếu là người dùng
+                            window.location.href = "/Home/Index";
+                        }
+                    } else {
+                        // Hiển thị lỗi nếu đăng nhập thất bại
+                        alert('Tên đăng nhập hoặc mật khẩu không đúng');
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra trong quá trình đăng nhập');
+                }
+            });
+        });
+    });
+
+    
+
+    $(document).ready(function () {
+        $(".quenmk").click(function () {
+            $(".form-quenmk").css("display", "block");
+        });
+    });
+</script>

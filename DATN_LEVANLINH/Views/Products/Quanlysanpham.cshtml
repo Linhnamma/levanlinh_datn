@@ -1,0 +1,311 @@
+﻿
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Quanlysanpham";
+}
+
+<div class="manager-product">
+    <h5 class="title-account">Quản lý sản phẩm</h5>
+    <p class="p-add-product" id="btn-add-product"><span style="color:#ef4339;">Thêm mới</span></p>
+    <div class="overlay"></div>
+    <div class="add-product">
+        <p ><span style="color:#ef4339;">Thêm mới</span></p>
+        <fieldset class="form-group">
+            <label for="category">Danh mục<span class="error">*</span></label>
+
+            <select name="category" id="category" class="form-control form-control-lg">
+                <option value="">Chọn danh mục</option>
+                @foreach (var itemcategory in Model.categorysubcategory)
+                {
+                    <option value="@itemcategory.category.category_id">@itemcategory.category.category_name</option>
+                }
+            </select>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="subcategory">Lọa sản phẩm<span class="error">*</span></label>
+            <select name="subcategory" id="subcategory" class="form-control form-control-lg">
+                <option value="">Chọn loại sản phẩm</option>
+            </select>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="name_product">Tên sản phẩm<span class="error">*</span></label>
+            <input type="text" name="name" id="name" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="img_product">Ảnh<span class="error">*</span></label>
+            <input type="file" name="img_product" id="img_product" accept="image/*" required class="form-control form-control-lg">
+            <img id="preview_image" src="#" alt="Preview image" style="display:none; width: 100px; height: 100px; margin-top: 10px;">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="price">Giá<span class="error">*</span></label>
+            <input type="text" name="price" id="price" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="quantity">Số lượng<span class="error">*</span></label>
+            <input type="text" name="quantity" id="quantity" required="" class="form-control form-control-lg">
+        </fieldset>
+
+
+        <button class="button btn-edit-addr btn btn-primary btn-more" type="submit"><i class="hoverButton"></i>Thêm</button>
+    </div>
+
+    <div class="change-product">
+        <p class="p-change-product"><span style="color:#ef4339;">Chỉnh sửa</span></p>
+        <fieldset class="form-group">
+            <label for="category_product">Danh mục<span class="error">*</span></label>
+
+            <select name="category_product" id="category_product" class="form-control form-control-lg">
+                <option value="">Chọn danh mục</option>
+                @foreach (var itemcategory in Model.categorysubcategory)
+                {
+                    <option value="@itemcategory.category.category_id">@itemcategory.category.category_name</option>
+                }
+            </select>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="subcategory_product">Lọai sản phẩm<span class="error">*</span></label>
+            <select name="subcategory_product" id="subcategory_product" class="form-control form-control-lg">
+                <option value="">Chọn loại sản phẩm</option>
+            </select>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="name_product">Tên sản phẩm<span class="error">*</span></label>
+            <input type="text" name="name_product" id="name_product" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="img_product">Ảnh<span class="error">*</span></label>
+            <input type="file" name="img_product" id="img_product" accept="image/*" required class="form-control form-control-lg">
+            <img id="preview_image" src="#" alt="Preview image" style="display:none; width: 100px; height: 100px; margin-top: 10px;">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="price_product">Giá<span class="error">*</span></label>
+            <input type="text" name="price_product" id="price_product" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="quantity_product">Số lượng<span class="error">*</span></label>
+            <input type="text" name="quantity_product" id="quantity_product" required="" class="form-control form-control-lg">
+        </fieldset>
+
+
+        <button class="button edit-product-info btn-edit-addr btn btn-primary btn-more" type="submit"><i class="hoverButton"></i>Chỉnh sửa</button>
+    </div>
+    <div class="manager-account-info">
+        <div class="header-account-info">
+            <div>Tên sản phẩm</div><div>Ảnh</div><div>Giá</div><div>Số lượng</div>
+        </div>
+        @foreach (var item in Model.products)
+        {
+            <div class="body-account-info">
+                <div class="account-info-item">
+                    @item.product_name
+                </div>
+                <div class="account-info-item">
+                    <img class="manager-img" src="@Url.Content("~/Image/" + item.pic_name)" alt="product image" />
+                </div>
+                <div class="account-info-item">
+                    @item.price
+                </div>
+                <div class="account-info-item">
+                    @item.quantity
+                </div>
+                <div class="account-info-item">
+                    <button class="bt-change-product"
+                            data-id="@item.product_id"
+                            data-name="@item.product_name"
+                            data-pic="@item.pic_name"
+                            data-descriptions="@item.descriptions"
+                            data-price="@item.price"
+                            data-quantity="@item.quantity"
+                            data-userid="@item.users_id"
+                            data-categoryid="@item.category_id"
+                            data-subcategoryid="@item.subcategory_id">
+                          
+                        
+                        Chỉnh sửa
+                    </button>
+                    <button class="btdelete-product">
+                        Xóa
+                    </button>
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+      $(document).ready(function () {
+        // Khi thay đổi category, load danh sách subcategory
+        $('#category').change(function () {
+            var selectedCategoryId = $(this).val();
+            var selectedCategory = @Html.Raw(JsonConvert.SerializeObject(Model.categorysubcategory));
+
+            $('#subcategory').empty(); // Clear subcategories
+            $('#subcategory').append('<option value="">Chọn loại sản phẩm</option>'); // Add default option
+
+            // Tìm category được chọn và load các subcategory tương ứng
+            var category = selectedCategory.find(c => c.category.category_id == selectedCategoryId);
+            if (category) {
+                category.subcategory.forEach(function (sub) {
+                    $('#subcategory').append('<option value="' + sub.subcategory_id + '">' + sub.subcategory_name + '</option>');
+                });
+            }
+        });
+      });
+    $(document).ready(function () {
+        // Khi nhấn vào nút Thêm mới
+        $('#btn-add-product').click(function () {
+            $('.add-product').show(); // Hiển thị form thêm sản phẩm
+            $('.overlay').show(); // Hiển thị lớp overlay mờ
+            $('body').addClass('no-scroll'); // Ngăn cuộn trang
+        });
+
+        // Khi nhấn vào overlay (vùng mờ xung quanh), ẩn form thêm sản phẩm
+        $('.overlay').click(function () {
+            $('.add-product').hide();
+            $('.overlay').hide();
+            $('body').removeClass('no-scroll');
+        });
+    });
+    $(document).ready(function () {
+        $("#img_product").on("change", function (event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#preview_image").attr("src", e.target.result).show();
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                $("#preview_image").hide();
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $(".btn-edit-addr").click(function (event) {
+            event.preventDefault(); // Ngăn form tự động submit
+
+            var formData = new FormData();
+
+            // Lấy tệp ảnh
+            var fileInput = $("#img_product")[0];
+            var file = fileInput.files[0];
+
+            if (file) {
+                formData.append("img_product", file);
+            }
+
+            var product = {
+                product_name: $("#name").val(),
+                pic_name: file ? file.name : '', // Nếu có file, sử dụng tên của file
+                descriptions: null,
+                price: $("#price").val(),
+                quantity: $("#quantity").val(),
+                category_id: $("#category").val(),
+                subcategory_id: $("#subcategory").val() // Đảm bảo lấy đúng id subcategory
+            };
+
+            // Thêm thông tin sản phẩm vào formData
+            formData.append("product", JSON.stringify(product));
+
+            $.ajax({
+                url: '/Products/ThemSanPham',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    alert("Thêm sản phẩm thành công!");
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+        });
+    });
+     $(document).ready(function () {
+    $('.bt-change-product').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        $('.change-product').css('display', 'block');
+
+        var Id = $(this).data("id");
+        var name = $(this).data('name');
+        var pic = $(this).data('pic');
+        var descriptions = $(this).data('descriptions');
+        var price = $(this).data('price');
+        var quantity = $(this).data('quantity');
+        var userid = $(this).data('userid');
+        var categoryid = $(this).data('categoryid');
+        var subcategoryid = $(this).data('subcategoryid');
+
+        $('#name_product').val(name);
+        $('#price_product').val(price);
+        $('#quantity_product').val(quantity);
+        $('#category_product').val(categoryid);
+
+        // Load lại subcategories khi chọn category
+        $('#category_product').change(function () {
+            var selectedCategoryId = $(this).val();
+            var selectedCategory = @Html.Raw(JsonConvert.SerializeObject(Model.categorysubcategory));
+
+            console.log('Selected Category ID:', selectedCategoryId);
+            console.log('Category Data:', selectedCategory);
+
+            $('#subcategory_product').empty(); // Xóa các option trước
+            $('#subcategory_product').append('<option value="">Chọn loại sản phẩm</option>'); // Option mặc định
+
+            // Tìm category đã chọn và load subcategories
+            var category = selectedCategory.find(c => c.category.category_id == selectedCategoryId);
+            if (category) {
+                category.subcategory.forEach(function (sub) {
+                    $('#subcategory_product').append('<option value="' + sub.subcategory_id + '">' + sub.subcategory_name + '</option>');
+                });
+            } else {
+                console.log('Không tìm thấy subcategory cho category này.');
+            }
+        }).trigger('change'); // Kích hoạt sự kiện change khi mở form để load subcategory
+        $('#subcategory_product').val(subcategoryid);
+        $(".edit-product-info").on("click", function (e) {
+            e.preventDefault();
+
+            var product = {
+                product_id: Id,
+                product_name: $("#name_product").val(),
+                pic_name: pic,
+                descriptions: descriptions,
+                price: $("#price_product").val(),
+                quantity: $("#quantity_product").val(),
+
+                category_id: $("#category_product").val(),
+                subcategory_id: $("#subcategory_product").val()
+            };
+
+            $.ajax({
+                url: '/Products/ChinhSuaProduct',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(product),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    alert("Chỉnh sửa tài khoản thành công!");
+
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+        });
+    });
+});
+</script>

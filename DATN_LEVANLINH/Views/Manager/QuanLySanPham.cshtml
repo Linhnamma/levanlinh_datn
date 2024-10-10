@@ -1,0 +1,89 @@
+﻿@using Newtonsoft.Json
+@{
+    ViewBag.Title = "QuanLySanPham";
+}
+@{ int count = 0;
+    int count1 = 0;
+}
+<div class="title-product-manager">
+    <h5>Danh sách sản phẩm</h5>
+</div>
+<div class="content-product-manager">
+    <div class="find-product">
+        <select name="category" id="category" class="form-control form-control-lg">
+            <option value="">Chọn danh mục</option>
+            @foreach (var itemcategory in Model.categorysubcategory)
+            {
+                <option value="@itemcategory.category.category_id">@itemcategory.category.category_name</option>
+            }
+        </select>
+        <select name="subcategory" id="subcategory" class="form-control form-control-lg">
+            <option value="">Chọn loại sản phẩm</option>
+        </select>
+        <button class="bt-find-product" type="submit"><i class="hoverButton"></i>Tìm kiếm</button>
+    </div>
+    <div class="form-list-product-manager">
+
+    </div>
+    
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+      $(document).ready(function () {
+        // Khi thay đổi category, load danh sách subcategory
+        $('#category').change(function () {
+            var selectedCategoryId = $(this).val();
+            var selectedCategory = @Html.Raw(JsonConvert.SerializeObject(Model.categorysubcategory));
+
+            $('#subcategory').empty(); // Clear subcategories
+            $('#subcategory').append('<option value="">Chọn loại sản phẩm</option>'); // Add default option
+
+            // Tìm category được chọn và load các subcategory tương ứng
+            var category = selectedCategory.find(c => c.category.category_id == selectedCategoryId);
+            console.log(category);
+            if (category) {
+                category.subcategory.forEach(function (sub) {
+                    $('#subcategory').append('<option value="' + sub.subcategory_id + '">' + sub.subcategory_name + '</option>');
+                });
+            }
+        });
+      });
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("HienThiSanPhamTheoDM", "Manager")',
+            type: 'GET',
+            data: { category: null, subcategory:null },
+            success: function (response) {
+                $('.form-list-product-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+         $('.bt-find-product').on('click', function (e) {
+            e.preventDefault();
+
+             var categoryId = $('#category').val();
+             var subcategoryId = $('#subcategory').val();
+
+            console.log('Selected category ID:', categoryId);
+             console.log('Selected category ID:', subcategoryId);
+            $.ajax({
+                url: '@Url.Action("HienThiSanPhamTheoDM", "Manager")',
+                type: 'GET',
+                data: { category: categoryId, subcategory:subcategoryId },
+                success: function (response) {
+                    $('.form-list-product-manager').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+
+        });
+
+
+    });
+</script>
+

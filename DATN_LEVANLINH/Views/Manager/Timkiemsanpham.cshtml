@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Timkiemsanpham";
+}
+
+@{ int count = 0;
+    int count1 = 0;
+}
+<div class="list-product-manager">
+    <div class="product-title">
+        <div class="product-item-title">
+            <p>Tên sản phẩm</p>
+        </div>
+        <div class="product-item-title">
+            <p>Mã sản phẩm</p>
+        </div>
+        <div class="product-item-title">
+            <p>Số lượng</p>
+        </div>
+        <div class="product-item-title">
+            <p>Giá bán</p>
+        </div>
+        <div class="product-item-title">
+
+        </div>
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    if (count >= 6)
+    {
+        break;
+    }
+    <div class="list-product-manager">
+        <div class="product-title">
+            <div class="product-item-title" style="justify-content: left; ">
+                <p class="font-weight color-p" style="margin-left:10px;">@item.product_name</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.product_id</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.quantity</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.price</p>
+            </div>
+            <div class="product-item-title bt-taohdn"
+                 data-id="@item.product_id"
+                 data-name="@item.product_name"
+                 data-pic="@item.pic_name"
+                 data-descriptions="@item.descriptions"
+                 data-price="@item.price"
+                 data-quantity="@item.quantity"
+                 data-userid="@item.users_id"
+                 data-categoryid="@item.category_id"
+                 data-subcategoryid="@item.subcategory_id">
+                <p class="font-weight" style="color:red"
+                   >Nhập sản phẩm</p>
+            </div>
+        </div>
+    </div>
+    count++;
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    
+
+    $(document).ready(function () {
+        // Khi nhấn vào nút Thêm mới
+        $('.bt-taohdn').click(function () {
+            var Id = $(this).data("id");
+            var name = $(this).data('name');
+            var pic = $(this).data('pic');
+            var descriptions = $(this).data('descriptions');
+            var price = $(this).data('price');
+            var quantity = $(this).data('quantity');
+            var userid = $(this).data('userid');
+            var categoryid = $(this).data('categoryid');
+            var subcategoryid = $(this).data('subcategoryid');
+            var product = {
+                product_id: Id,
+                product_name: name,
+                pic_name: pic,
+                descriptions: descriptions,
+                price: price,
+                quantity: quantity,
+                users_id: userid,
+                category_id: categoryid,
+                subcategory_id: subcategoryid
+            };
+            console.log(product);
+            var queryString = $.param(product);
+            $.ajax({
+                url: '/Manager/ChiTietHoaDonNhap',
+                type: 'POST',
+                data: JSON.stringify(product),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // Chuyển hướng tới trang ThanhToan
+
+                    window.location.href = '/Manager/ChiTietHoaDonNhap?' + queryString;
+                },
+                error: function (xhr, status, error) {
+                    window.location.href = '/Account/Login';
+                }
+            });
+        });
+
+        // Khi nhấn vào overlay (vùng mờ xung quanh), ẩn form thêm sản phẩm
+        
+    });
+    
+</script>

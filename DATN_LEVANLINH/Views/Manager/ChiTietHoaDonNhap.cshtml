@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "ChiTietHoaDonNhap";
+}
+
+<div class="section-payment">
+    <div class="container">
+        <div class="row">
+            <div class="info-user-payment">
+                <div class="info-user">
+                    <p><span>Nhân viên</span></p>
+                    <fieldset class="form-group">
+                        <label for="full_name">Họ và tên<span class="error">*</span></label>
+                        <input type="text" name="full_name" id="full_name" required="" value="@Model.user.full_name" class="form-control form-control-lg">
+                    </fieldset>
+                    <p><span>Nhà cung cấp</span></p>
+                    <select name="supplier" id="supplier" class="form-control form-control-lg">
+                      
+                        @foreach (var item in Model.supplier)
+                        {
+                            <option value="@item.supplier_id">@item.supplier_name</option>
+                        }
+                    </select>
+
+
+                </div>
+            </div>
+            <div class="info-shipping">
+                <p><span>Thông tin nhập hàng</span></p>
+
+                <fieldset class="form-group">
+
+                    <label for="sprice">Tên sản phẩm<span class="error"></span></label>
+                    <input type="text" name="product_name" id="product_name" value="@Model.product.product_name" required="" class="form-control form-control-lg">
+                </fieldset>
+
+                <fieldset class="form-group">
+
+                    <label for="sprice">Giá nhập<span class="error">*</span></label>
+                    <input type="number" name="price" id="price" value="0" required="" class="form-control form-control-lg">
+                </fieldset>
+            </div>
+            <div class="info-payment">
+                <div class="info-payment-box">
+                    <p><span>Sản phẩm</span></p>
+                    <div class="info-payment-item">
+                        <div class="item-product">
+                            <div class="payment-image">
+                                <img src="@Url.Content("~/Image/"+ @Model.product.pic_name)" alt="product image" />
+                            </div>
+                            <div class="payment-product-content">
+                                <p class="price-pro">@Model.product.product_name <span>@Model.product.price đ</span></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-payment-item">
+                        <p class="price-pro">Giá nhập: <span id="total-price">2 đ</span></p>
+                        <label>Số lượng:</label>
+                        <div class="custom custom-btn-numbers clearfix input_number_product">
+                            <button id="btn-minus" class="btn-minus btn-cts" type="button">–</button>
+                            <input aria-label="Số lượng" type="text" class="qty input-text" id="qty" name="quantity" size="4" value="1" maxlength="3">
+                            <button id="btn-plus" class="btn-plus btn-cts" type="button">+</button>
+                        </div>
+
+
+
+                        <!-- Hidden inputs to store model values -->
+                        <input type="hidden" id="model-quantity" value="@Model.product.quantity" />
+                        <input type="hidden" id="model-price" value="@Model.product.price" />
+                        
+
+                    </div>
+                    <div class="info-payment-item">
+                        <p class="price-pro-item">Tổng tiền: <span id="total-amount-hdn">0 đ</span></p>
+                        <div class="pull-xs-left">
+
+                            <input class="bt btn-purchase" type="submit" value="Nhập"
+                                   data-userid="@Model.user.users_id"
+                                   data-productid="@Model.product.product_id">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#price').on('input', function () {
+            // Lấy giá trị nhập vào
+            var priceValue = $(this).val();
+
+            // Cập nhật giá trị cho thẻ p hiển thị giá nhập
+            $('#total-price').text(priceValue + ' đ');
+        });
+
+
+        function calculateTotal() {
+            // Lấy giá nhập và số lượng
+            var priceValue = parseFloat($('#price').val()) || 0;  // Giá nhập
+            var qtyValue = parseInt($('#qty').val()) || 0;        // Số lượng
+
+            // Tính tổng tiền
+            var totalAmount = priceValue * qtyValue;
+
+            // Cập nhật tổng tiền vào thẻ p hiển thị
+            $('#total-amount-hdn').text(totalAmount + ' đ');
+        }
+
+        // Sự kiện khi người dùng thay đổi giá nhập
+        $('#price').on('input', function () {
+            calculateTotal();  // Gọi hàm tính tổng
+        });
+
+        // Sự kiện khi người dùng thay đổi số lượng
+        $('#qty').on('input', function () {
+            calculateTotal();  // Gọi hàm tính tổng
+        });
+
+        // Sự kiện khi bấm nút tăng số lượng
+        $('#btn-plus').on('click', function () {
+            var qty = parseInt($('#qty').val()) || 1;
+            $('#qty').val(qty + 1);
+            calculateTotal();  // Gọi hàm tính tổng
+        });
+
+        // Sự kiện khi bấm nút giảm số lượng
+        $('#btn-minus').on('click', function () {
+            var qty = parseInt($('#qty').val()) || 1;
+            if (qty > 1) {
+                $('#qty').val(qty - 1);
+            }
+            calculateTotal();  // Gọi hàm tính tổng
+        });
+
+        $('.btn-purchase').click(function () {
+            
+            var purchase_date = new Date().toISOString(); // ISO 8601 format
+            var supplier_id = $("#supplier").val();
+           
+            var product_id = $(this).data("productid");
+            var users_id = $(this).data("userid");
+            var quantity = parseInt($('#qty').val());
+            var price = parseFloat($('#total-price').text().replace(' đ', ''));
+            var total_amount = parseFloat($('#total-amount-hdn').text().replace(' đ', ''));
+            var purchase_order = {
+                purchaseOrder_date: purchase_date,
+                supplier_id: supplier_id,
+                product_id: product_id,
+                users_id: users_id,
+                quantity: quantity,
+                price: price,
+                totalAmount: total_amount
+            }
+            var product = {
+                product_id: product_id,
+                quantity: quantity
+            };
+            console.log(purchase_order);
+            // Gửi dữ liệu qua AJAX
+            $.ajax({
+                url: '/Manager/themHDN',
+                type: 'POST',
+                data: JSON.stringify(purchase_order),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // Xử lý khi gửi thành công
+                    alert('Tạo hóa đơn nhập thành công:');
+                    console.log('Thanh toán thành công:', response);
+                    
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý khi gửi lỗi
+                    alert('Thanh toán không thành công:');
+                    console.log('Lỗi thanh toán:', error);
+                }
+            });
+            $.ajax({
+                url: '/Manager/HoanLaiSoLuongSanPham',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(product),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+
+
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+        });
+    });
+</script>

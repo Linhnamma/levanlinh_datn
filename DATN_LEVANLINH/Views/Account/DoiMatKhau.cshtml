@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "DoiMatKhau";
+}
+
+<div class="section-change-password">
+    <h5 class="title-account">Đổi mật khẩu</h5>
+    <div class="change-password">
+        <fieldset class="form-group">
+            <label for="oldPass">Mật khẩu cũ <span class="error">*</span></label>
+            <input type="password" name="OldPassword" id="OldPass" required="" class="form-control form-control-lg">
+            <span id="error-old-pass" style="color:red" class="text-danger"></span>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="changePass">Mật khẩu mới <span class="error">*</span></label>
+            <input type="password" name="Password" id="changePass" required="" class="form-control form-control-lg">
+            <span id="error-change-pass" style="color:red" class="text-danger"></span>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="confirmPass">Xác nhận lại mật khẩu <span class="error">*</span></label>
+            <input type="password" name="ConfirmPassword" id="confirmPass" required="" class="form-control form-control-lg">
+            <span id="error-confirm-pass" style="color:red" class="text-danger"></span>
+        </fieldset>
+
+        <button class="button btn-edit-addr btn btn-primary btn-more bt-edit-password" type="button" data-id="@Model.users_id" data-password="@Model.password"><i class="hoverButton"></i>Đặt lại mật khẩu</button>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".bt-edit-password").click(function () {
+            var userId = $(this).data("id");
+            var oldPass = $("#OldPass").val();
+            var newPass = $("#changePass").val();
+            var confirmPass = $("#confirmPass").val();
+            var oldPassword = $(this).data("password")
+            console.log(oldPassword);
+            console.log(oldPass);
+            // Reset lỗi hiển thị
+            $("#error-old-pass").text("");
+            $("#error-change-pass").text("");
+            $("#error-confirm-pass").text("");
+            if (oldPass != oldPassword) {
+                $("#error-old-pass").text("Mật khẩu chưa đúng.");
+                return;
+            }
+            
+            // Kiểm tra mật khẩu mới và xác nhận mật khẩu
+            if (newPass === oldPass) {
+                $("#error-change-pass").text("Mật khẩu mới phải khác mật khẩu cũ.");
+                return;
+            }
+
+            if (newPass !== confirmPass) {
+                $("#error-confirm-pass").text("Xác nhận mật khẩu không khớp.");
+                return;
+            }
+            var user = {
+                users_id: userId,
+                password: newPass
+            }
+            // Gửi yêu cầu PUT tới API để đổi mật khẩu
+            $.ajax({
+                url: "/Account/doimatkhau",  // Đường dẫn đến API
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (response) {
+                    alert("Đổi mật khẩu thành công.");
+                    // Tải lại trang sau khi thành công nếu cần
+                    window.location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert("Có lỗi xảy ra khi đổi mật khẩu: " + error);
+                }
+            });
+        });
+    });
+</script>

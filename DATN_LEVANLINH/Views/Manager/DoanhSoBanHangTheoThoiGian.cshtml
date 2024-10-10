@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "DoanhSoBanHangTheoThoiGian";
+}
+
+<div class="section-sale box-shadow">
+    <div class="content-sale-section">
+        <div class="content-sale-item">
+            <label>Tiền bán hàng<span class="error">*</span></label>
+            <label class="size-16">@ViewBag.TotalAmount đ</label>
+        </div>
+        <div class="content-sale-item">
+            <label>Số đơn hàng : <span class="error">@ViewBag.Count</span></label>
+            <label>Số sản phẩm : <span class="error">@ViewBag.Quantity</span></label>
+        </div>
+        <div class="content-sale-item">
+            <label>Số loại sản phẩm : <span class="error">@ViewBag.Sosanpham</span></label>
+            <label>Số đơn nhập : <span class="error">0</span></label>
+        </div>
+
+    </div>
+    <div class="info-sale">
+        <div class="info-sale-item">
+            <div class="info-sale-item-box">
+                <div class="info-sale-title-child">
+                    <a>Hoạt động</a>
+                </div>
+                <div class="info-sale-title">
+                    <p class="info-sale-style">Tiền bán hàng: <span>@ViewBag.TotalAmount đ</span></p>
+                    <p class="info-sale-style">Số hóa đơn: <span>@ViewBag.Count</span></p>
+                    <p class="info-sale-style">Số sản phẩm: <span>@ViewBag.Quantity</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="info-sale-item">
+            <div class="info-sale-item-box">
+                <div class="info-sale-title-child">
+                    <a>Thông tin kho</a>
+                </div>
+
+                <div class="info-sale-title">
+                    <p class="info-sale-style">Tồn kho: <span>@ViewBag.Sosanpham</span></p>
+                    <p class="info-sale-style">Hết hàng: <span>0</span></p>
+                    <p class="info-sale-style">Hàng vừa nhập: <span>0</span></p>
+                </div>
+            </div>
+            
+
+        </div>
+
+
+    </div>
+</div>
+

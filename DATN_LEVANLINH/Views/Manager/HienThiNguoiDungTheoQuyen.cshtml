@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewBag.Title = "HienThiNguoiDungTheoQuyen";
+}
+@{ int count = 0;
+    int count1 = 0;
+}
+<div class="overlay"></div>
+
+<div class="change-product-manager">
+    <p><span style="color:#ef4339;">Chỉnh sửa tài khoản</span></p>
+    <fieldset class="form-group">
+        <label for="name">Tên<span class="error">*</span></label>
+        <input type="text" name="name" id="name" required="" class="form-control form-control-lg">
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="full_name">Họ và tên<span class="error">*</span></label>
+        <input type="text" name="full_name" id="full_name" required="" class="form-control form-control-lg">
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="address">Địa chỉ<span class="error">*</span></label>
+        <input type="text" name="address" id="address" required="" class="form-control form-control-lg">
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="phone">Số điện thoại<span class="error">*</span></label>
+        <input type="text" name="phone" id="phone" required="" class="form-control form-control-lg">
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="email">Email<span class="error">*</span></label>
+        <input type="email" name="email" id="email" required="" class="form-control form-control-lg">
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="role">Quyền<span class="error">*</span></label>
+        <select name="user_role" id="user_role" required="" class="form-control form-control-lg">
+            <option value="">Quyền</option>
+            <option value="1">Quản trị viên</option>
+            <option value="3">Người dùng</option>
+        </select>
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="username">Tên đăng nhập<span class="error">*</span></label>
+        <input type="text" name="username" id="username" required="" class="form-control form-control-lg">
+
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="password">Mật khẩu<span class="error">*</span></label>
+        <input type="password" name="password" id="password" required="" class="form-control form-control-lg">
+    </fieldset>
+    <button class="button btn-edit-addr btn btn-primary btn-more" type="submit"><i class="hoverButton"></i>Chỉnh sửa</button>
+</div>
+
+<div class="list-product-manager">
+    <div class="product-title">
+        <div class="product-item-title">
+            <p>Tên </p>
+        </div>
+        <div class="product-item-title">
+            <p>Địa chỉ</p>
+        </div>
+        <div class="product-item-title">
+            <p>Số điện thoại</p>
+        </div>
+        <div class="product-item-title">
+            <p>Email</p>
+        </div>
+        <div class="product-item-title">
+
+        </div>
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    if (count >= 6)
+    {
+        break;
+    }
+    <div class="list-product-manager">
+        <div class="product-title">
+            <div class="product-item-title" style="justify-content: left; ">
+                <p class="font-weight color-p" style="margin-left:10px;">@item.full_name</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.address</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.phone</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.email</p>
+            </div>
+            <div class="product-item-title">
+                <svg class="bt-change-account-manager" xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none"
+                     data-id="@item.users_id"
+                     data-name="@item.name"
+                     data-fullname="@item.full_name"
+                     data-address="@item.address"
+                     data-phone="@item.phone"
+                     data-email="@item.email"
+                     data-role="@item.role_id"
+                     data-username="@item.user_name"
+                     data-password="@item.password">
+                    <path d="M13 7H7V5H13V7Z" fill="currentColor" />
+                    <path d="M13 11H7V9H13V11Z" fill="currentColor" />
+                    <path d="M7 15H13V13H7V15Z" fill="currentColor" />
+                    <path fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z"
+                          fill="currentColor" />
+                </svg>
+                <svg class="bt-delete-account-manager" xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40" fill="none"
+                      data-id="@item.users_id">
+                    <path fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z"
+                          fill="currentColor" />
+                    <path d="M9 9H11V17H9V9Z" fill="currentColor" />
+                    <path d="M13 9H15V17H13V9Z" fill="currentColor" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    count++;
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Khi nhấn vào nút Thêm mới
+        $('.bt-change-account-manager').click(function () {
+            $('.change-product-manager').show(); // Hiển thị form thêm sản phẩm
+            $('.overlay').show(); // Hiển thị lớp overlay mờ
+            $('body').addClass('no-scroll'); // Ngăn cuộn trang
+            var userId = null;
+            userId = $(this).data("id");
+            var name = $(this).data('name');
+            var fullName = $(this).data('fullname');
+            var address = $(this).data('address');
+            var phone = $(this).data('phone');
+            var email = $(this).data('email');
+            var role = $(this).data('role');
+            var username = $(this).data('username');
+            var password = $(this).data('password');
+            $('#name').val(name);
+            $('#full_name').val(fullName);
+            $('#address').val(address);
+            $('#phone').val(phone);
+            $('#email').val(email);
+            $('#user_role').val(role);
+            $('#username').val(username);
+            $('#password').val(password);
+            $(".btn-edit-addr").on("click", function (e) {
+                e.preventDefault();
+
+                var user = {
+                    users_id: userId,
+                    name: $("#name").val(),
+                    full_name: $("#full_name").val(),
+                    address: $("#address").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                    role_id: $("#user_role").val(),
+                    user_name: $("#username").val(),
+                    password: $("#password").val()
+                };
+
+                $.ajax({
+                    url: '/Manager/ChinhSuaUser',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(user),
+                    success: function (response) {
+                        alert("Chỉnh sửa tài khoản thành công!");
+                        loadAction();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Có lỗi xảy ra: " + error);
+                    }
+                });
+            });
+        });
+        $('.overlay').click(function () {
+            loadAction();
+        });
+
+        function loadAction() {
+            console.log("Loading action...");
+            $.ajax({
+                url: '/Manager/HienThiNguoiDungTheoQuyen',
+                type: 'GET',
+                data: { id: 3 },
+                success: function (response) {
+                    console.log("Received response for loading action.");
+                    $('.form-list-account-manager').html(response);
+                    console.log("Action loaded.");
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+        }
+    });
+
+    $(document).ready(function () {
+        // Sự kiện xóa sản phẩm
+        $(document).on('click', '.bt-delete-account-manager', function () {
+            var Id = $(this).data("id");
+            console.log("Product ID to delete:", Id);
+            var confirmDelete = confirm("Bạn có chắc chắn muốn xóa không?");
+
+            if (confirmDelete) {
+                $.ajax({
+                    url: '/Manager/XoaUser',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ id: Id }),
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            // Tải lại danh sách sản phẩm sau khi xóa thành công
+                            loadAction();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Có lỗi xảy ra: " + error);
+                    }
+                });
+            } else {
+                console.log("Người dùng đã hủy bỏ hành động xóa.");
+            }
+        });
+
+        // Hàm để tải danh sách sản phẩm
+        function loadAction() {
+            console.log("Loading action...");
+            $.ajax({
+                url: '/Manager/HienThiNguoiDungTheoQuyen',
+                type: 'GET',
+                data: { id: 3 },
+                success: function (response) {
+                    console.log("Received response for loading action.");
+                    $('.form-list-account-manager').html(response);
+                    console.log("Action loaded.");
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+        }
+
+
+    });
+</script>

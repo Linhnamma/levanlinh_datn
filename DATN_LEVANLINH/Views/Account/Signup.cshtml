@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Signup";
+}
+
+<section class="bread-crumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="home">
+                <a href="/"><span>Trang chủ</span></a>
+                <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+            </li>
+
+            <li><strong><span>Đăng kí tài khoản</span></strong></li>
+
+        </ul>
+    </div>
+</section>
+<div class="section-login-signup">
+    <div class="container">
+        <div class="row-login-signup">
+            <div class="wpx">
+                <h1 class="title_heads a-center"><span>Đăng kí</span></h1>
+                <span class="a-center">
+                    Nếu bạn đã có tài khoản,
+                    <a href="/Account/Login">
+                        đăng nhập tại đây
+                    </a>
+                </span>
+                <div class="form-login">
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="name" id="name" placeholder="Tên" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="full_name" id="full_name" placeholder="Tên đầy đủ" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="address" id="address" placeholder="Địa chỉ" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="phone" id="phone" placeholder="Số điện thoại" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="email" value="" name="email" id="email" placeholder="Email" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" value="" name="user_name" id="user_name" placeholder="Tên đăng nhập" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" value="" name="password" id="password" placeholder="Mật khẩu" required="">
+                    </fieldset>
+                    <div class="pull-xs-left">
+                        <input class="bt" type="submit" value="Đăng kí">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[type='submit']").click(function(event) {
+            event.preventDefault(); // Ngăn form tự động submit
+
+            var user = {
+                name: $("#name").val(),
+                full_name: $("#full_name").val(),
+                address: $("#address").val(),
+                phone: $("#phone").val(),
+                email: $("#email").val(),
+                user_name: $("#user_name").val(),
+                password: $("#password").val()
+                // Không cần gửi RoleId, nó sẽ mặc định là 1
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/Signup",
+                data: JSON.stringify(user),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        window.location.href = "/Account/Login";
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert("Có lỗi xảy ra. Vui lòng thử lại.");
+                }
+            });
+        });
+    });</script>
+
+
+

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "DonHang";
+}
+
+<div class="section-order">
+    <div class="row-section-order">
+        <h5 class="title-account">Đơn hàng của bạn</h5>
+        <div class="order-info">
+            <div class="header-order-info">
+                <div>Đơn hàng</div><div>Ngày</div><div>Giá trị</div><div>Thông tin </div><div>Tình trạng</div>
+            </div>
+
+            <div class="body-order-info">
+                @foreach (var item in Model)
+                {
+                <div class="order-item box-shadow">
+                    <div class="image-order">
+                        <img class="item-img-order" src="@Url.Content("~/Image/" + @item.product.pic_name)" alt="product image" />
+                    </div>
+                    <div>
+                        @item.order.order_date
+                    </div>
+                    <div>
+                        @item.order.total_amount
+                    </div>
+                    <div>
+                        @item.order.payment_status
+                    </div>
+                    <div>
+                        @item.order.status
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

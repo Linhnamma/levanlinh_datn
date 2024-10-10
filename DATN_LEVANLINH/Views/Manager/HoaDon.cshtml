@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "HoaDon";
+}
+<div class="title-product-manager">
+    <h5>Danh sách hóa đơn</h5>
+</div>
+<div class="order-overview">
+    <div class="order-status-selector">
+        <div class="order-status">
+            <p id="daily-link " class="time-link selected-notconfirm">Chưa xác nhận</p>
+
+        </div>
+        <div class="order-status">
+            <p id="daily-link " class="time-link selected-confirm">Đang giao </p>
+
+        </div>
+        <div class="order-status">
+            <p id="daily-link " class="time-link selected-done">Đã giao</p>
+
+        </div>
+
+    </div>
+    <div class="form-list-account-manager">
+
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Gắn sự kiện click cho các liên kết có class "title-info"
+        $('.time-link').on('click', function (e) {
+            // Ngăn chặn hành vi mặc định (nếu cần)
+            e.preventDefault();
+
+            // Loại bỏ class "selected" khỏi tất cả các liên kết
+            $('.time-link').removeClass('selected-sales-time');
+
+            // Thêm class "selected" vào liên kết được nhấp
+            $(this).addClass('selected-sales-time');
+        });
+    });
+    $(document).ready(function () {
+        $(".selected-notconfirm").addClass('selected-sales-time');
+
+        $.ajax({
+            url: '@Url.Action("DanhSachHoaDon", "Manager")',
+            type: 'GET',
+            data: { id: 1 },
+            success: function (response) {
+                $('.form-list-account-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('.selected-confirm').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+            url: '@Url.Action("DanhSachHoaDon", "Manager")',
+            type: 'GET',
+            data: { id: 2 },
+            success: function (response) {
+                $('.form-list-account-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+        });
+    });
+    $(document).ready(function () {
+        $('.selected-notconfirm').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+            url: '@Url.Action("DanhSachHoaDon", "Manager")',
+            type: 'GET',
+            data: { id: 1 },
+            success: function (response) {
+                $('.form-list-account-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+        });
+    });
+    $(document).ready(function () {
+        $('.selected-done').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+            url: '@Url.Action("DanhSachHoaDon", "Manager")',
+            type: 'GET',
+            data: { id: 3 },
+            success: function (response) {
+                $('.form-list-account-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+        });
+    });
+</script>

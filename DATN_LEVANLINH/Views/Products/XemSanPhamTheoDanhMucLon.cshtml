@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "XemSanPhamTheoDanhMucLon";
+}
+
+<div class="section-product">
+    <div class="container">
+        <div class="row">
+            <img width="100%" src="@Url.Content("~/Image/banner_chh.jpg" )" alt="product image" />
+        </div>
+    </div>
+</div>
+<section class="bread-crumb">
+    <div class="container">
+        <div class="row">
+            <ul class="breadcrumb background">
+                <li class="home">
+                    <a href="/"><span>Trang chủ</span></a>
+                    <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+                </li>
+
+                <li><strong><span>Sản phẩm</span></strong></li>
+
+                
+
+            </ul>
+        </div>
+    </div>
+
+</section>
+<div class="section-product">
+    <div class="container">
+        <div class="row">
+            <div class="list-product">
+
+                @foreach (var item in Model)
+                {
+
+                    <a href="@Url.Action("ChiTietSanPham", "Products", new { id = item.product_id })" class="product-link">
+                        <div class="product-item box-shadow background">
+                            <img class="item-img" src="@Url.Content("~/Image/" + @item.pic_name)" alt="product image" />
+
+                            <div class="item-body">
+                                <h3 class="item-name">@item.product_name</h3>
+                                <p class="item-price">@item.price VND</p>
+                            </div>
+                        </div>
+                    </a>
+
+
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+   <div class="container">
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="page">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <div class="page-arena">
+                    <a class="page-number" href="@Url.Action("XemSanPhamTheoDanhMucLon", new { category = ViewBag.Category, subcategory = ViewBag.Subcategory, page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })"><<</a>
+                </div>
+            }
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                if (i == ViewBag.CurrentPage)
+                {
+                    <div class="page-arena">
+                        <a class="page-number selected-page">@i</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="page-arena">
+                        <a class="page-number" href="@Url.Action("XemSanPhamTheoDanhMucLon", new { category = ViewBag.Category, subcategory = ViewBag.Subcategory, page = i, pageSize = ViewBag.PageSize })">@i</a>
+                    </div>
+                }
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <div class="page-arena">
+                    <a class="page-number" href="@Url.Action("XemSanPhamTheoDanhMucLon", new { category = ViewBag.Category, subcategory = ViewBag.Subcategory, page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">>></a>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+
+</div>

@@ -1,0 +1,252 @@
+﻿
+@{
+    ViewBag.Title = "HienThiSanPham";
+}
+
+<div class="section-product">
+    <div class="container box-shadow">
+        <div class="header-category">
+            <h3>Danh mục sản phẩm</h3>
+        </div>
+    </div>
+    <div class="container box-shadow">
+        <div class="category">
+            
+            @foreach (var item in Model)
+            {
+                <a href="#" class="product-link " data-category-id="@item.category.category_id">
+                    <h2 class="category-name" >@item.category.category_name</h2>
+                </a>
+            }
+        </div>
+
+        <div class="product">
+            <div class="product-banner">
+                <img src="@Url.Content("~/Image/banner_chh.jpg" )" alt="product image" />
+            </div>
+            <section class="bread-crumb">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li class="home">
+                            <a href="/"><span>Trang chủ</span></a>
+                            <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+                        </li>
+
+                        <li>
+                            <strong><span>Sản phẩm</span></strong>
+                        </li>
+                        <li>
+                            <span id="chevron-icon" class="mr_lr hidden">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+                            <strong>
+                                <span id="selected-category">
+                                </span>
+                            </strong>
+                        </li>
+                        <li>
+                            <span id="chevronn-icon" class="mr_lr hidden">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+                            <strong>
+                                <span id="selected-subcategory">
+                                </span>
+                            </strong>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+            <div class="subcategory">
+                <a class="prev button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
+                        <path d="M4.47107 1L0.999988 4.52892L4.47107 8" stroke="#AAABAB" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M6.49585 4.52905H1.05781" stroke="#AAABAB" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.8347 4.52905H8.80992" stroke="#AAABAB" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+                <div id="subcategory-content"></div>
+                <a class="next button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
+                        <path d="M12.4492 1L18.4492 7.09998L12.4492 13.1" fill="#FFF6E8"></path>
+                        <path d="M12.4492 1L18.4492 7.09998L12.4492 13.1" stroke="#1C5B41" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M8.94922 7.09998H18.3492" stroke="#1C5B41" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M1.44922 7.09998H4.94922" stroke="#1C5B41" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="product-detail">
+
+            </div>
+            <div class="button-product">
+                <div class="row-button">
+                    <a href="#">
+                        <input class="bt" type="submit" value="Xem thêm" />
+
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("HienThiSanPhamTheoDM", "Products")',
+            type: 'GET',
+            data: { category: null,subcategory:null },
+            success: function (response) {
+                $('.product-detail').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+        $('.product-link').on('click', function (e) {
+            e.preventDefault();
+
+            var categoryId = $(this).data('category-id');
+
+            console.log('Selected category ID:', categoryId);
+
+            $.ajax({
+                url: '@Url.Action("HienThiSanPhamTheoDM", "Products")',
+                type: 'GET',
+                data: { category: categoryId, subcategory: null },
+                success: function (response) {
+                    $('.product-detail').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+
+        });
+   });
+
+
+    $(document).ready(function () {
+        $('.product-link').click(function (e) {
+            // Ngăn chặn hành động mặc định của thẻ <a>
+            e.preventDefault();
+
+            // Xóa class 'selected' khỏi tất cả các category
+            $('.product-link .category-name').removeClass('selected');
+
+            // Thêm class 'selected' vào category được click
+            $(this).find('.category-name').addClass('selected');
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('.product-link').click(function (e) {
+            // Ngăn chặn hành động mặc định của thẻ <a>
+            e.preventDefault();
+
+            // Lấy tên category từ thẻ <h2>
+            var categoryName = $(this).find('.category-name').text();
+
+            // Cập nhật nội dung của phần tử <span> với tên category đã chọn
+            $('#selected-category').text(categoryName);
+            $('#chevron-icon').removeClass('hidden');
+        });
+    });
+
+   $(document).ready(function () {
+    $('.product-link').click(function (e) {
+        e.preventDefault();
+
+        var categoryId = $(this).data('category-id');
+        var model = @Html.Raw(Json.Encode(Model));
+
+        var selectedCategory = model.find(c => c.category.category_id === categoryId);
+        $('.bt').data('category-id',selectedCategory.category.category_id);
+        if (selectedCategory) {
+            var subcategories = selectedCategory.subcategory || [];
+            var subcategoryContent = $('#subcategory-content');
+            subcategoryContent.empty(); // Xóa nội dung cũ
+
+            // Thêm subcategory "Tất cả" và đánh dấu nó là được chọn
+            var allSubcategory = $('<div>')
+                .text('Tất cả')
+                .addClass('subcategory selected-page'); // Thêm lớp CSS 'selected'
+            subcategoryContent.append(allSubcategory);
+
+            if (subcategories.length > 0) {
+                subcategories.forEach(function (sub) {
+                    var div = $('<div>')
+                        .text(sub.subcategory_name)
+                        .addClass('subcategory')
+                        .data('subcategory-id', sub.subcategory_id); // Thêm lớp CSS cho các subcategory
+                    subcategoryContent.append(div);
+                });
+
+                // Xử lý sự kiện click trên các subcategory
+                subcategoryContent.on('click', '.subcategory', function () {
+                    // Xóa lớp CSS 'selected' từ tất cả các phần tử
+                    $('.subcategory').removeClass('selected-page');
+
+                    // Thêm lớp CSS 'selected' vào phần tử đang được nhấp
+                    $(this).addClass('selected-page');
+                });
+
+            } else {
+                subcategoryContent.append($('<div>').text("No subcategories found for Category ID " + categoryId));
+            }
+        } else {
+            $('#subcategory-content').empty().append($('<div>').text("Category not found for categoryId: " + categoryId));
+        }
+    });
+
+    // Đảm bảo phần tử "Tất cả" được chọn mặc định khi trang được tải
+    $('#subcategory-content').on('click', '.subcategory', function () {
+        // Xóa lớp CSS 'selected' từ tất cả các phần tử
+        $('.subcategory').removeClass('selected-page');
+
+        // Thêm lớp CSS 'selected' vào phần tử đang được nhấp
+        $(this).addClass('selected-page');
+
+        var subcategoryId = $(this).data('subcategory-id');
+        $('.bt').data('subcategory-id', subcategoryId);
+        var categoryName = $(this).text();
+        console.log('Selected subcategory ID:', categoryName);
+        $('#selected-subcategory').text(categoryName);
+        $('#chevronn-icon').removeClass('hidden');
+        console.log('Selected subcategory ID:', subcategoryId);
+        // Gửi yêu cầu Ajax đến phương thức Action
+        $.ajax({
+            url: '@Url.Action("HienThiSanPhamTheoDM", "Products")',
+            type: 'GET',
+            data: { category: null, subcategory: subcategoryId },
+            success: function (response) {
+                $('.product-detail').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+    }).find('.subcategory.selected-page').addClass('selected-page'); // Đảm bảo phần tử "Tất cả" có lớp 'selected'
+       $('.bt').on('click', function () {
+           var subcategoryId = $(this).data('subcategory-id');
+        var categoryId = $(this).data('category-id');
+
+        console.log('Selected category ID:', categoryId);
+        console.log('Selected subcategory ID:', subcategoryId);
+
+        // Tạo URL cho action cần chuyển hướng
+        var url = '@Url.Action("XemSanPhamTheoDanhMucLon", "Products")' +
+                  '?category=' + encodeURIComponent(categoryId) +
+                  '&subcategory=' + encodeURIComponent(subcategoryId);
+
+        // Chuyển hướng đến URL
+           window.location.href = url;
+        });
+       });
+
+
+
+</script>

@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachHoaDon";
+}
+
+@{ int count = 0;
+    int count1 = 0;
+}
+<div class="list-product-manager">
+    <div class="product-title">
+        <div class="product-item-title">
+            <p>Số hóa đơn</p>
+        </div>
+        <div class="product-item-title">
+            <p>Thời gian</p>
+        </div>
+        <div class="product-item-title">
+            <p>Tổng tiền</p>
+        </div>
+        <div class="product-item-title">
+            <p>Tình trạng thanh toán</p>
+        </div>
+        <div class="product-item-title">
+
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    if (count >= 6)
+    {
+        break;
+    }
+    <div class="list-product-manager">
+        <div class="product-title">
+            <div class="product-item-title" style="justify-content: left; ">
+                <p class="font-weight color-p" style="margin-left:10px;">@item.order.order_id</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.order.order_date</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.order.total_amount</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.order.payment_status</p>
+            </div>
+            @if (ViewBag.ID == 1)
+            {
+                <div class="product-item-title" id="div1">
+                    <button class="bt-confirm-order" style="height:100%;" data-id="@item.order.order_id"
+                            data-productid="@item.order.product_id"
+                            data-quantity="@item.order.quantity">Xác nhận</button>
+                    <button class="delete-order-1"style="height:100%;" data-id="@item.order.order_id"
+                            data-vbid="@item.order.order_id">Hủy</button>
+                </div>
+            }
+            @if (ViewBag.ID == 2)
+            {
+                <div class="product-item-title" id="div2">
+                    <button class="bt-confirmdone-order" style="height:100%;" data-id="@item.order.order_id">Hoàn thành</button>
+                    <button  class="delete-order-2" style="height:100%;" data-id="@item.order.order_id"
+                             data-vbid="@item.order.order_id"
+                            data-productid="@item.order.product_id"
+                            data-quantity="@item.order.quantity">Hủy</button>
+                </div>
+            }
+            @if (ViewBag.ID == 3)
+            {
+                <div class="product-item-title" id="div2">
+                     <p class="font-weight">@item.order.status</p>
+                </div>
+            }
+
+        </div>
+    </div>
+    count++;
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+        $('.delete-order-1').click(function () {
+            var Id = $(this).data("id");
+           
+            console.log(Id);
+
+            $.ajax({
+                url: '/Manager/XoaDH',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: Id }),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    alert("Hủy thành công!");
+
+                    loadAction(1);
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+
+
+        });
+        $('.delete-order-2').click(function () {
+            var Id = $(this).data("id");
+            var productId = $(this).data("productid");
+            var quantity = $(this).data("quantity");
+            console.log(Id);
+            var product = {
+                product_id: productId,
+                quantity: quantity
+            };
+            $.ajax({
+                url: '/Manager/XoaDH',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ id: Id }),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    alert("Hủy thành công!");
+
+                    loadAction(2);
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+
+            $.ajax({
+                url: '/Manager/HoanLaiSoLuongSanPham',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(product),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+
+
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+
+
+        });
+        // Khi nhấn vào nút Thêm mới
+        $('.bt-confirm-order').click(function () {
+            var Id = $(this).data("id");
+            var productId = $(this).data("productid");
+            var quantity = $(this).data("quantity");
+            var order_date = new Date().toISOString();
+            var order = {
+                order_id: Id,
+                status: "Đang giao",
+                order_date: order_date
+
+            };
+            var product = {
+                product_id:productId,
+                quantity:quantity
+            };
+            console.log(product);
+            $.ajax({
+                url: '/Manager/ChinhSuaHD',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(order),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    alert("Đã xác nhận!");
+
+                    loadAction(1);
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+            $.ajax({
+                url: '/Manager/ChinhSuaSoLuongSanPham',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(product),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    
+
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+
+
+        });
+        $('.bt-confirmdone-order').click(function () {
+            var Id = $(this).data("id");
+            var order_date = new Date().toISOString();
+            var order = {
+                order_id: Id,
+                status: "Đã giao",
+                order_date: order_date
+
+            };
+
+            $.ajax({
+                url: '/Manager/ChinhSuaHD',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(order),
+                success: function (response) {
+                    console.log("Response từ server:", response);
+                    alert("Đã xác nhận!");
+
+                    loadAction(2);
+
+                },
+                error: function (xhr, status, error) {
+                    console.log("Có lỗi xảy ra: " + error);
+                }
+            });
+
+
+        });
+        function loadAction(id) {
+            $.ajax({
+                url: '/Manager/DanhSachHoaDon',
+                type: 'GET',
+                data: { id: id },
+                success: function (response) {
+                    $('.form-list-account-manager').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+        }
+    });
+
+        // Khi nhấn vào overlay (vùng mờ xung quanh), ẩn form thêm sản phẩm
+
+
+</script>
+

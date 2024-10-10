@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "ChiTietSanPham";
+}
+
+
+<section class="bread-crumb">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li class="home">
+                <a href="/"><span>Trang chủ</span></a>
+                <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+            </li>
+
+            <li>
+                <strong><span>Sản phẩm</span></strong>
+                <span class="mr_lr">&nbsp;<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg>&nbsp;</span>
+            </li>
+            <li><strong><span>@Model.product_name</span></strong></li>
+        </ul>
+    </div>
+
+</section>
+<div class="product">
+    <div class="container">
+        <div class="row">
+            <div class="product-image">
+                <img src="@Url.Content("~/Image/" + Model.pic_name)" alt="product image" />
+            </div>
+            <div class="product-detail ">
+                <h1 class="title-product"> @Model.product_name</h1>
+                <form enctype="multipart/form-data" data-cart-form="" id="add-to-cart-form" action="/cart/add" method="post" class="form-inline">
+                    <div class="price-box">
+                        <div class="special-price">
+                            <span class="price product-price">@Model.price ₫</span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-product">
+
+
+                        <div class="service_product">
+                            <div class="service">
+                                <a><img class="img-responsive" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/iamge_product2.png?1723540086975"></a>
+                                <div class="title_text">
+                                    <p class="title">Miễn phí vận chuyển  </p>
+                                    <p class="text">Cho tất cả đơn hàng </p>
+                                </div>
+                            </div>
+                            <div class="service">
+                                <a><img class="img-responsive" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/iamge_product1.png?1723540086975"></a>
+                                <div class="title_text">
+                                    <p class="title">Miễn phí đổi, sửa hàng </p>
+                                    <p class="text">Đổi hàng trong 30 ngày kể từ ngày mua Hỗ trợ sửa đồ miễn phí</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix form-group ">
+                            <div class="flex-quantity">
+                                <div class="qty-ant clearfix custom-btn-number ">
+                                    <p class="text" style="color:red;">Còn @Model.quantity sản phẩm trong kho</p>
+                                </div>
+                                <div class="btn-mua" style="margin-bottom:20px;">
+
+                                    <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" 
+                                            data-id="@Model.product_id"
+                                            data-name="@Model.product_name"
+                                            data-pic="@Model.pic_name"
+                                            data-descriptions="@Model.descriptions"
+                                            data-price="@Model.price"
+                                            data-quantity="@Model.quantity"
+                                            data-userid="@Model.users_id"
+                                            data-categoryid="@Model.category_id"
+                                            data-subcategoryid="@Model.subcategory_id">
+                                        Mua ngay
+                                    </button>
+
+                                </div>
+                                <div class="btn-mua button_actions clearfix">
+
+                                   
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+       
+        $('.btn-buy-now').on('click', function (e) {
+
+            var Id = $(this).data("id");
+            var name = $(this).data('name');
+            var pic = $(this).data('pic');
+            var descriptions = $(this).data('descriptions');
+            var price = $(this).data('price');
+            var quantity = $(this).data('quantity');
+            var userid = $(this).data('userid');
+            var categoryid = $(this).data('categoryid');
+            var subcategoryid = $(this).data('subcategoryid');
+            var product = {
+                product_id: Id,
+                product_name: name,
+                pic_name: pic,
+                descriptions: descriptions,
+                price: price,
+                quantity: quantity,
+                users_id: userid,
+                category_id: categoryid,
+                subcategory_id: subcategoryid
+            };
+            console.log(product);
+            var queryString = $.param(product);
+            $.ajax({
+                url: '/Account/ThanhToan',
+                type: 'POST',
+                data: JSON.stringify(product),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // Chuyển hướng tới trang ThanhToan
+                    
+                    window.location.href = '/Account/ThanhToan?' + queryString;
+                },
+                error: function (xhr, status, error) {
+                    window.location.href = '/Account/Login';
+                }
+            });
+          
+
+        });
+
+    });
+
+</script>

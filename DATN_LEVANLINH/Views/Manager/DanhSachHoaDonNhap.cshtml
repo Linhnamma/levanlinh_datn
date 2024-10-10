@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachHoaDonNhap";
+}
+
+
+
+@{ int count = 0;
+    int count1 = 0;
+}
+<div class="list-product-manager">
+    <div class="product-title">
+        <div class="product-item-title">
+            <p>Số hóa đơn</p>
+        </div>
+        <div class="product-item-title">
+            <p>Thời gian</p>
+        </div>
+        <div class="product-item-title">
+            <p>Tổng tiền</p>
+        </div>
+        <div class="product-item-title">
+            <p>Tình trạng</p>
+        </div>
+        <div class="product-item-title">
+
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    if (count >= 6)
+    {
+        break;
+    }
+    <div class="list-product-manager">
+        <div class="product-title">
+            <div class="product-item-title" style="justify-content: left; ">
+                <p class="font-weight color-p" style="margin-left:10px;">@item.purchaseOrder_id</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.purchaseOrder_date</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight">@item.totalAmount</p>
+            </div>
+            <div class="product-item-title">
+                <p class="font-weight"></p>
+            </div>
+
+            <div class="product-item-title">
+                <p class="font-weight xemchitiet-hdn" style="color:red" data-id="@item.purchaseOrder_id"
+                   data-date="@item.purchaseOrder_date"
+                   data-supplierid="@item.supplier_id"
+                   data-productid="@item.product_id"
+                   data-usersid="@item.users_id"
+                   data-quantity="@item.quantity"
+                   data-price="@item.price"
+                   data-total="@item.totalAmount"
+                   >Xem chi tiết</p>
+            </div>
+        </div>
+    </div>
+    count++;
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+   $(document).ready(function () {
+        // Khi nhấn vào nút Thêm mới
+        $('.xemchitiet-hdn').click(function () {
+            var purchaseOrder_id = $(this).data("id");
+            var purchaseOrder_date = $(this).data('date');
+            var supplier_id = $(this).data('supplierid');
+            var product_id = $(this).data('productid');
+            var users_id = $(this).data('usersid');
+            var quantity = $(this).data('quantity');
+            var price = $(this).data('price');
+            var totalAmount = $(this).data('total');
+          
+            var purchase = {
+                purchaseOrder_id: purchaseOrder_id,
+                purchaseOrder_date: purchaseOrder_date,
+                supplier_id: supplier_id,
+                product_id: product_id,
+                users_id: users_id,
+                quantity: quantity,
+                price: price,             
+                totalAmount: totalAmount
+            };
+            console.log(purchase);
+            var queryString = $.param(purchase);
+            $.ajax({
+                url: '/Manager/XemChiTietHoaDonNhap',
+                type: 'POST',
+                data: JSON.stringify(purchase),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // Chuyển hướng tới trang ThanhToan
+
+                    window.location.href = '/Manager/XemChiTietHoaDonNhap?' + queryString;
+                },
+                error: function (xhr, status, error) {
+                    window.location.href = '/Account/Login';
+                }
+            });
+           
+        });
+
+        // Khi nhấn vào overlay (vùng mờ xung quanh), ẩn form thêm sản phẩm
+
+    });
+ </script>
+

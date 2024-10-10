@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@{ int count = 0;
+    int count1 = 0;
+    }
+<div class="bodyswap">
+    <section class="section-slider">
+        <img src="@Url.Content("~/Image/abai.jpg")" alt="Alena" class="img-responsive">
+
+    </section>
+    <section class="section_service">
+        <div class="home-service container swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
+            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                <div class="swiper-slide swiper-slide-active">
+                    <span class="image">
+                        <img class="lazyload img-responsive loading" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/image_service1.png?1723540086975" alt="MIỄN PHÍ GIAO HÀNG" data-was-processed="true">
+                    </span>
+                    <h3>
+                        MIỄN PHÍ GIAO HÀNG
+                    </h3>
+                    <p>
+                        Miễn phí ship với đơn hàng
+                    </p>
+                </div>
+                <div class="swiper-slide swiper-slide-next ">
+                    <span class="image">
+                        <img class="lazyload img-responsive loading" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/image_service2.png?1723540086975" alt="THANH TOÁN COD" data-was-processed="true">
+                    </span>
+                    <h3>
+                        THANH TOÁN COD
+                    </h3>
+                    <p>
+                        Thanh toán khi nhận hàng (COD)
+                    </p>
+                </div>
+                <div class="swiper-slide">
+                    <span class="image">
+                        <img class="lazyload img-responsive loading" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/image_service3.png?1723540086975" alt="KHÁCH HÀNG VIP" data-was-processed="true">
+                    </span>
+                    <h3>
+                        KHÁCH HÀNG VIP
+                    </h3>
+                    <p>
+                        Ưu đãi dành cho khách hàng VIP
+                    </p>
+                </div>
+                <div class="swiper-slide">
+                    <span class="image">
+                        <img class="lazyload img-responsive loading" src="//bizweb.dktcdn.net/100/455/315/themes/894917/assets/image_service4.png?1723540086975" alt="HỖ TRỢ BẢO HÀNH" data-was-processed="true">
+                    </span>
+                    <h3>
+                        HỖ TRỢ BẢO HÀNH
+                    </h3>
+                    <p>
+                        Đổi , sửa đồ tại tất cả store
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+    <section class="section-product">
+        <div class="container">
+            <div class="row-product">
+                <div class="block-title">
+                    <h2>
+                        <span>SẢN PHẨM BÁN CHẠY</span>
+                    </h2>
+                </div>
+                <div class="list-product">
+
+                    @Html.Action("SanPhamBanChay", "Products")
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <section class="section-product">
+        <div class="container">
+            <div class="row-product">
+                <div class="block-title">
+                    <h2>
+                        <span>SẢN PHẨM MỚI VỀ</span>
+                    </h2>
+                </div>
+                <div class="list-product">
+
+                    @Html.Action("SanPhamMoi", "Products")
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <section class="section-product">
+        <div class="container">
+            <div class="row-product">
+                <div class="block-title">
+                    <h2>
+                        <span>MỸ PHẨM</span>
+                    </h2>
+                </div>
+                <div class="product-container">
+                    <div class="product-banner">
+                        <img class="item-img" src="@Url.Content("~/Image/my-pham-cocoon-718148.jpg")" alt="product image" />
+                    </div>
+
+                    @Html.Action("XemSanPhamTheoDanhMuc", "Products", new { subcategory = 21 })
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="section-product">
+        <div class="container">
+            <div class="row-product">
+                <div class="block-title">
+                    <h2>
+                        <span>QUẦN ÁO</span>
+                    </h2>
+                </div>
+                <div class="product-container">
+                    <div class="product-banner">
+                        <img class="item-img" src="@Url.Content("~/Image/banner_quan.jpg")" alt="product image" />
+                    </div>
+
+                    @Html.Action("XemSanPhamTheoDanhMuc", "Products", new { subcategory = 17 })
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+</div>

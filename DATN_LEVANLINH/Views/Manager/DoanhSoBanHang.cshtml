@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "DoanhSoBanHang";
+}
+
+<div class="sales-overview">
+    <div class="sales-time-selector">
+        <div class="time-period">
+            <p id="daily-link " class="time-link selected-day">Hôm nay</p>
+
+        </div>
+        <div class="time-period">
+            <p id="daily-link " class="time-link selected-week">Tuần này</p>
+
+        </div>
+        <div class="time-period">
+            <p id="daily-link " class="time-link selected-month">Tháng này</p>
+
+        </div>
+    </div>
+    <div class="content-sale">
+
+    </div>
+    <div class="chart-sale">
+        <div class="chart-sale-box">
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        // Gắn sự kiện click cho các liên kết có class "title-info"
+        $('.time-link').on('click', function (e) {
+            // Ngăn chặn hành vi mặc định (nếu cần)
+            e.preventDefault();
+
+            // Loại bỏ class "selected" khỏi tất cả các liên kết
+            $('.time-link').removeClass('selected-sales-time');
+
+            // Thêm class "selected" vào liên kết được nhấp
+            $(this).addClass('selected-sales-time');
+        });
+    });
+    $(document).ready(function () {
+        $(".selected-day").addClass('selected-sales-time');
+       $.ajax({
+        url: '@Url.Action("DoanhSoBanHangTheoThoiGian", "Manager")',
+        type: 'GET',
+        data: { id: 1 },
+        success: function (response) {
+            $('.content-sale').html(response);
+
+            // Sau khi nội dung được tải xong, gọi AJAX để tải biểu đồ
+            $.ajax({
+                url: '@Url.Action("Bieudodoanhso", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    // Chèn nội dung PartialView vào thẻ div có class chart-sale
+                    $('.chart-sale-box').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải biểu đồ.');
+                }
+            });
+        },
+        error: function () {
+            alert('Không thể tải nội dung bán hàng.');
+        }
+    });
+
+    });
+
+    $(document).ready(function () {
+        $('.selected-day').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("DoanhSoBanHangTheoThoiGian", "Manager")',
+                type: 'GET',
+                data: { id: 1 },
+                success: function (response) {
+                    $('.content-sale').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải .');
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('.selected-week').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("DoanhSoBanHangTheoThoiGian", "Manager")',
+                type: 'GET',
+                data: { id: 2 },
+                success: function (response) {
+                    $('.content-sale').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải .');
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('.selected-month').on('click', function (e) {
+
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("DoanhSoBanHangTheoThoiGian", "Manager")',
+                type: 'GET',
+                data: { id: 3 },
+                success: function (response) {
+                    $('.content-sale').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải .');
+                }
+            });
+        });
+    });
+
+
+
+</script>

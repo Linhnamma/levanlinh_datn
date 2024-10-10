@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "XemChiTietHoaDonNhap";
+}
+
+<div class="section-payment">
+    <div class="container">
+        <div class="row">
+            <div class="info-user-payment">
+                <div class="info-user">
+                    <p><span>Nhân viên</span></p>
+                    <fieldset class="form-group">
+                        <label for="full_name">Họ và tên<span class="error">*</span></label>
+                        <input type="text" name="full_name" id="full_name" required="" value="@Model.user.full_name" class="form-control form-control-lg">
+                    </fieldset>
+                    <p><span>Nhà cung cấp</span></p>
+                    
+                    <fieldset class="form-group">
+                        <label for="purchase_name">Nhà cung cấp<span class="error">*</span></label>
+                        <input type="text" name="purchase_name" id="purchase_name" required="" value="@Model.supplier.supplier_name" class="form-control form-control-lg">
+                    </fieldset>
+
+                </div>
+            </div>
+            <div class="info-shipping">
+                <p><span>Thông tin nhập hàng</span></p>
+
+                <fieldset class="form-group">
+
+                    <label for="sprice">Tên sản phẩm<span class="error"></span></label>
+                    <input type="text" name="product_name" id="product_name" value="@Model.product.product_name" required="" class="form-control form-control-lg">
+                </fieldset>
+
+                <fieldset class="form-group">
+
+                    <label for="sprice">Giá nhập<span class="error"></span></label>
+                    <input type="number" name="price" id="price" value="@Model.purchase_order.price" required="" class="form-control form-control-lg">
+                </fieldset>
+            </div>
+            <div class="info-payment">
+                <div class="info-payment-box">
+                    <p><span>Sản phẩm</span></p>
+                    <div class="info-payment-item">
+                        <div class="item-product">
+                            <div class="payment-image">
+                                <img src="@Url.Content("~/Image/"+ @Model.product.pic_name)" alt="product image" />
+                            </div>
+                            <div class="payment-product-content">
+                                <p class="price-pro">@Model.product.product_name <span>@Model.product.price đ</span></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-payment-item">
+                        <p class="price-pro">Giá nhập: <span id="total-price">@Model.purchase_order.price</span></p>
+                        <p class="price-pro">Số lương: <span id="total-price">@Model.purchase_order.quantity</span></p>
+                        
+                       
+
+
+
+                        <!-- Hidden inputs to store model values -->
+                        <input type="hidden" id="model-quantity" value="@Model.product.quantity" />
+                        <input type="hidden" id="model-price" value="@Model.product.price" />
+
+
+                    </div>
+                    <div class="info-payment-item">
+                        <p class="price-pro-item">Tổng tiền: <span id="total-amount-hdn">@Model.purchase_order.totalAmount</span></p>
+                        <div class="pull-xs-left">
+
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

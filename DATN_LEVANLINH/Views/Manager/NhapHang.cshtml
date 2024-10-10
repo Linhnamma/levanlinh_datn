@@ -1,0 +1,144 @@
+﻿@using Newtonsoft.Json
+@{
+    ViewBag.Title = "NhapHang";
+}
+
+<div class="title-product-manager">
+    <h5>Nhập hàng</h5>
+</div>
+<div class="content-product-manager">
+    <div class="find-product">
+        <input type="text" style="height:30px; margin:auto 10px;" class="purchase_data" id="purchase_data" placeholder="Mã, tên sản phẩm" />
+        <button class="bt-find-product-purchase" type="submit"><i class="hoverButton"></i>Tìm kiếm</button>
+        <select name="category" id="category" class="form-control form-control-lg">
+            <option value="">Chọn danh mục</option>
+            @foreach (var itemcategory in Model)
+            {
+                <option value="@itemcategory.category.category_id">@itemcategory.category.category_name</option>
+            }
+        </select>
+        <select name="subcategory" id="subcategory" class="form-control form-control-lg">
+            <option value="">Chọn loại sản phẩm</option>
+        </select>
+
+    </div>
+    <div class="form-list-supplierorder-manager">
+
+    </div>
+
+</div>
+
+<script>
+
+      $(document).ready(function () {
+        // Khi thay đổi category, load danh sách subcategory
+        $('#category').change(function () {
+            var selectedCategoryId = $(this).val();
+            var selectedCategory = @Html.Raw(JsonConvert.SerializeObject(Model));
+
+            $('#subcategory').empty(); // Clear subcategories
+            $('#subcategory').append('<option value="">Chọn loại sản phẩm</option>'); // Add default option
+
+            // Tìm category được chọn và load các subcategory tương ứng
+            var category = selectedCategory.find(c => c.category.category_id == selectedCategoryId);
+            console.log(category);
+            if (category) {
+                category.subcategory.forEach(function (sub) {
+                    $('#subcategory').append('<option value="' + sub.subcategory_id + '">' + sub.subcategory_name + '</option>');
+                });
+            }
+        });
+      });
+     $(document).ready(function () {
+        // Khi thay đổi category, load danh sách subcategory
+        $('#subcategory').change(function () {
+            var selectedSubCategoryId = $(this).val();
+            var selectedCategoryId = $("#category").val();
+            console.log(selectedCategoryId, selectedSubCategoryId);
+             $.ajax({
+            url: '@Url.Action("NhapHangTheoDM", "Manager")',
+            type: 'GET',
+                 data: { category: selectedCategoryId, subcategory: selectedSubCategoryId },
+            success: function (response) {
+                $('.form-list-supplierorder-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+        });
+     });
+     $(document).ready(function () {
+       $.ajax({
+            url: '@Url.Action("NhapHangTheoDM", "Manager")',
+            type: 'GET',
+            data: { category: null, subcategory:null },
+            success: function (response) {
+                $('.form-list-supplierorder-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+     });
+     $(document).ready(function () {
+        // Khi thay đổi category, load danh sách subcategory
+        $('#category').change(function () {
+            var selectedCategoryId = $(this).val();
+
+             $.ajax({
+            url: '@Url.Action("NhapHangTheoDM", "Manager")',
+            type: 'GET',
+            data: { category: selectedCategoryId, subcategory:null },
+            success: function (response) {
+                $('.form-list-supplierorder-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+        });
+     });
+    $(document).ready(function () {
+
+
+        $(".bt-find-product-purchase").click(function (e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+            // Lấy giá trị của input có ID 'purchase_id'
+            var data = $("#purchase_data").val();
+
+            console.log(data);
+            if (!isNaN(data) && data.trim() !== '') {
+                $.ajax({
+                    url: '@Url.Action("Timkiemsanpham", "Manager")',
+                    type: 'GET',
+                    data: { id: data, keyword: null, style: 1 },
+                    success: function (response) {
+                        $('.form-list-supplierorder-manager').html(response);
+                    },
+                    error: function () {
+                        alert('Không thể tải sản phẩm.');
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '@Url.Action("Timkiemsanpham", "Manager")',
+                    type: 'GET',
+                    data: { id: null, keyword: data, style: 2 },
+                    success: function (response) {
+                        $('.form-list-supplierorder-manager').html(response);
+                    },
+                    error: function () {
+                        alert('Không thể tải sản phẩm.');
+                    }
+                });
+             }
+
+        });
+    });
+
+
+</script>

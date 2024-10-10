@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="section-manager">
+    <div class="container">
+        <div class="row">
+            <div class="menu-manager">
+                <div class="menu-item-title logo-background">
+                    <p class="text-logo">Lenae</p>
+                </div>
+                <div class="menu-item-title selected-product-manager">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Sản phẩm</p>
+                </div>
+                <div class="menu-item-title selected-account-manager">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Tài khoản</p>
+                </div>
+                <div class="menu-item-title selected-sales-manager">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Doanh số bán hàng</p>
+                </div>
+                <div class="menu-item-title selected-order-manager">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Hóa đơn</p>
+                </div>
+                <div class="menu-item-title selected-purchase">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Nhập hàng</p>
+                </div>
+                <div class="menu-item-title selected-purchase-manager">
+                    <svg width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5H8V9H6V3H22V21H6V15H8V19H20V5Z" fill="currentColor" />
+                        <path d="M13.0743 16.9498L11.6601 15.5356L14.1957 13H2V11H14.1956L11.6601 8.46451L13.0743 7.05029L18.024 12L13.0743 16.9498Z"
+                              fill="currentColor" />
+                    </svg>
+                    <p>Hóa đơn nhập</p>
+                </div>
+            </div>
+
+            <div class="content-manager">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+     $(document).on('click', '.selected-product-manager', function () {
+         $.ajax({
+                url: '@Url.Action("QuanLySanPham", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải sản phẩm.');
+                }
+                });
+     });
+
+
+    });
+
+    $(document).ready(function () {
+     $(document).on('click', '.selected-account-manager', function () {
+         $.ajax({
+                url: '@Url.Action("QuanLyTaiKhoan", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải .');
+                }
+                });
+     });
+
+
+    });
+    $(document).ready(function () {
+     $(document).on('click', '.selected-sales-manager', function () {
+         $.ajax({
+                url: '@Url.Action("DoanhSoBanHang", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải .');
+                }
+                });
+     });
+
+
+    });
+
+     $(document).ready(function () {
+         $(document).on('click', '.selected-order-manager', function () {
+
+             $.ajax({
+
+                url: '@Url.Action("HoaDon", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải .');
+                }
+                });
+     });
+
+
+     });
+     $(document).ready(function () {
+         $(document).on('click', '.selected-purchase-manager', function () {
+
+             $.ajax({
+
+                url: '@Url.Action("HoaDonNhap", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải .');
+                }
+                });
+     });
+
+
+     });
+    $(document).ready(function () {
+         $(document).on('click', '.selected-purchase', function () {
+
+             $.ajax({
+
+                url: '@Url.Action("NhapHang", "Manager")',
+                type: 'GET',
+                success: function (response) {
+                    $('.content-manager').html(response);
+
+                },
+                error: function () {
+                alert('Không thể tải .');
+                }
+                });
+     });
+
+
+ });
+</script>

@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "ThanhToan";
+}
+
+<div class="section-payment">
+    <div class="container">
+        <div class="row">
+            <div class="info-user-payment">
+                <div class="info-user">
+                    <p><span>Thông tin nhận hàng</span></p>
+                    <fieldset class="form-group">
+                        <label for="full_name">Họ và tên<span class="error">*</span></label>
+                        <input type="text" name="full_name" id="full_name" required="" value="@Model.user.full_name" class="form-control form-control-lg">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="address">Địa chỉ<span class="error">*</span></label>
+                        <input type="text" name="address" id="address" value="@Model.user.address" required="" class="form-control form-control-lg">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="phone">Số điện thoại<span class="error">*</span></label>
+                        <input type="text" name="phone" id="phone" required="" class="form-control form-control-lg" value="@Model.user.phone">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="email">Email<span class="error">*</span></label>
+                        <input type="email" name="email" id="email" required="" value="@Model.user.email" class="form-control form-control-lg">
+                    </fieldset>
+
+
+                </div>
+            </div>
+            <div class="info-shipping">
+                <p><span>Thông tin vận chuyển</span></p>
+                <fieldset class="form-group">
+                    <label class="label-none" for="full_name"></label>
+                    <label class="label" for="full_name">Vui lòng chọn thông tin giao hàng</label>
+                </fieldset>
+                <p style="display:none"><span>Thông tin vận chuyển</span></p>
+                <p><span>Thanh toán</span></p>
+
+                <div class="selected-payment">
+                    <div class="selected-payment-box">
+                        <div class="radio_input">
+                            <input style="width:10%;" name="paymentMethod" id="paymentMethod-536433" type="radio" class="input-radio" data-bind="paymentMethod" value="536433" data-provider-id="4">
+                            <label for="paymentMethod-536433" class="radio__label">
+                                <span class="radio__label__primary">Thanh toán khi giao hàng (COD)</span>
+                            </label>
+                        </div>
+                        <div class="content-box">
+                            <p>Bạn chỉ phải thanh toán khi nhận được hàng</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="info-payment">
+                <div class="info-payment-box">
+                    <p><span>Đơn hàng</span></p>
+                    <div class="info-payment-item">
+                        <div class="item-product">
+                            <div class="payment-image">
+                                <img src="@Url.Content("~/Image/"+ @Model.product.pic_name)" alt="product image" />
+                            </div>
+                            <div class="payment-product-content">
+                                <p class="price-pro">@Model.product.product_name <span>@Model.product.price đ</span></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-payment-item">
+                        <label>Số lượng:</label>
+                        <div class="custom custom-btn-numbers clearfix input_number_product">
+                            <button id="btn-minus" class="btn-minus btn-cts" type="button">–</button>
+                            <input aria-label="Số lượng" type="text" class="qty input-text" id="qty" name="quantity" size="4" value="1" maxlength="3">
+                            <button id="btn-plus" class="btn-plus btn-cts" type="button">+</button>
+                        </div>
+                        <p class="price-pro">Tạm tính: <span id="total-price">@Model.product.price đ</span></p>
+
+                        <!-- Hidden inputs to store model values -->
+                        <input type="hidden" id="model-quantity" value="@Model.product.quantity" />
+                        <input type="hidden" id="model-price" value="@Model.product.price" />
+                        <p class="price-pro">Giảm giá: <span>0 đ</span></p>
+
+                    </div>
+                    <div class="info-payment-item">
+                        <p class="price-pro-item">Tổng tiền: <span id="total-amount">@Model.product.price đ</span></p>
+                        <div class="pull-xs-left">
+
+                            <input class="bt btn-payment" type="submit" value="Thanh toán"  
+                                            data-userid="@Model.user.users_id"                                          
+                                            data-productid="@Model.product.product_id">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Hàm cập nhật tổng giá
+        function updateTotalPrice() {
+            var qty = parseInt($('#qty').val());
+            var price = parseFloat($('#model-price').val());
+
+            if (isNaN(qty) || qty <= 0) {
+                qty = 1; // Đặt lại giá trị nếu không hợp lệ
+                $('#qty').val(qty);
+            }
+
+            var totalPrice = price * qty;
+            $('#total-price').text(totalPrice.toFixed(0) + ' đ');
+            $('#total-amount').text(totalPrice.toFixed(0) + ' đ');
+        }
+
+        // Xử lý khi nhấn nút giảm số lượng
+        $('#btn-minus').click(function () {
+            var qty = parseInt($('#qty').val());
+            var maxQty = parseInt($('#model-quantity').val());
+
+            if (!isNaN(qty) && qty > 1) {
+                $('#qty').val(qty - 1);
+                updateTotalPrice();
+            }
+        });
+
+        // Xử lý khi nhấn nút tăng số lượng
+        $('#btn-plus').click(function () {
+            var qty = parseInt($('#qty').val());
+            var maxQty = parseInt($('#model-quantity').val());
+
+            if (!isNaN(qty) && qty < maxQty) {
+                $('#qty').val(qty + 1);
+                updateTotalPrice();
+            }
+        });
+
+        // Xử lý khi thay đổi giá trị trong input số lượng
+        $('#qty').change(function () {
+            updateTotalPrice();
+        });
+
+        $('.btn-payment').click(function () {
+            var users_id = $(this).data("userid");
+            var order_date = new Date().toISOString(); // ISO 8601 format
+            var discount = 0; // Hoặc tính toán theo cách khác
+            var total_amount = parseFloat($('#total-amount').text().replace(' đ', ''));
+            var product_id = $(this).data("productid");
+            var quantity = parseInt($('#qty').val());
+            var status = "Chưa xác nhận";
+            var payment_status = "Thanh toán khi nhận hàng";
+            var order = {
+                users_id: users_id,
+                order_date: order_date,
+                discount: discount,
+                total_amount: total_amount,
+                product_id: product_id,
+                quantity: quantity,
+                status: status,
+                payment_status: payment_status
+            }
+            // Gửi dữ liệu qua AJAX
+            $.ajax({
+                url: '/Account/themHD',
+                type: 'POST',
+                data: JSON.stringify(order),
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    // Xử lý khi gửi thành công
+                    alert('Thanh toán thành công:');
+                    console.log('Thanh toán thành công:', response);
+                    window.location.href = "/Products/HienThiSanPham";
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý khi gửi lỗi
+                    alert('Thanh toán không thành công:');
+                    console.log('Lỗi thanh toán:', error);
+                }
+            });
+        });
+    });
+
+   
+</script>

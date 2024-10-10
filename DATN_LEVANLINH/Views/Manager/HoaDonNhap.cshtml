@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "NhapHang";
+}
+
+<div class="title-account-manager">
+    <h5>Danh sách nhập</h5>
+</div>
+<div class="content-account-manager">
+    
+    <div class="find-account find-purchase " style="margin-top: 50px; ">
+        <input type="text" class="purchase_id" id="purchase_id" placeholder="Tìm kiếm theo id" />
+        <button class="bt-find-by-id" type="submit"><i class="hoverButton"></i>Tìm kiếm</button>
+        <select name="role" id="role-suplier" class="form-control form-control-lg">
+            <option value=""> Chọn nhà cung cấp </option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.supplier_id">@item.supplier_name</option>
+            }
+        </select>
+
+    </div>
+    <div class="form-list-purchase-manager">
+
+    </div>
+
+</div>
+<script>
+    
+    $(document).ready(function () {
+        
+        $.ajax({
+            url: '@Url.Action("DanhSachHoaDonNhap", "Manager")',
+            type: 'GET',
+            data: { id: null, ncc: null },
+            success: function (response) {
+                $('.form-list-purchase-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+
+    });
+    
+    $(".bt-find-by-id").click(function (e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+        // Lấy giá trị của input có ID 'purchase_id'
+        var purchaseId = $("#purchase_id").val();
+        $.ajax({
+            url: '@Url.Action("DanhSachHoaDonNhap", "Manager")',
+            type: 'GET',
+            data: { id: purchaseId, ncc: null },
+            success: function (response) {
+                $('.form-list-purchase-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+    });
+    $(document).ready(function () {
+        // Bắt sự kiện thay đổi trên select box
+        $('#role-suplier').change(function () {
+            // Lấy giá trị của option được chọn
+            var selectedSupplierId = $(this).val();
+
+            // Kiểm tra nếu đã chọn nhà cung cấp (không phải option mặc định)
+            $.ajax({
+            url: '@Url.Action("DanhSachHoaDonNhap", "Manager")',
+            type: 'GET',
+            data: { id: null, ncc:selectedSupplierId },
+            success: function (response) {
+                $('.form-list-purchase-manager').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+        });
+    });
+
+</script>
+

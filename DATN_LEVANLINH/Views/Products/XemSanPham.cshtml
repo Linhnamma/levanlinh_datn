@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "XemSanPham";
+}
+<div class="section-product">
+    <div class="container">
+        <div class="category">
+            @foreach (var item in Model)
+            {
+                <a href="#" class="product-link" data-category-id="@item.category_id">
+                    <h3 class="item-name">@item.category_name</h3>
+                </a>
+            }
+        </div>
+        <div class="product">
+            <!-- Nội dung của sản phẩm sẽ được tải vào đây -->
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function () {      
+        $.ajax({
+            url: '@Url.Action("XemSanPhamTheoDanhMucLon", "Products")',
+            type: 'GET',
+            data: { category: null }, 
+            success: function (response) {
+                $('.product').html(response);
+            },
+            error: function () {
+                alert('Không thể tải sản phẩm.');
+            }
+        });
+
+        $('.product-link').on('click', function (e) {
+            e.preventDefault();
+
+            var categoryId = $(this).data('category-id');
+
+            $.ajax({
+                url: '@Url.Action("XemSanPhamTheoDanhMucLon", "Products")',
+                type: 'GET',
+                data: { category: categoryId },
+                success: function (response) {
+                    $('.product').html(response);
+                },
+                error: function () {
+                    alert('Không thể tải sản phẩm.');
+                }
+            });
+        });
+    });
+</script>

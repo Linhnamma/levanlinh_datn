@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "SanPhamBanChay";
+}
+
+@{ int count = 0; }
+<div class="list-product">
+
+    @foreach (var item in Model)
+    {
+        if (count >= 10)
+        {
+            break;  // Dừng vòng lặp sau khi hiển thị 10 sản phẩm
+        }
+        <a href="@Url.Action("ChiTietSanPham", "Products", new { id = item.product_id })" class="product-link">
+            <div class="product-item">
+                <img class="item-img" src="@Url.Content("~/Image/" + @item.pic_name)" alt="product image" />
+
+                <div class="item-body">
+                    <h3 class="item-name">@item.product_name</h3>
+                    <p class="item-price">@item.price VND</p>
+                </div>
+            </div>
+        </a>
+
+        count++;
+
+    }
+
+</div>
+

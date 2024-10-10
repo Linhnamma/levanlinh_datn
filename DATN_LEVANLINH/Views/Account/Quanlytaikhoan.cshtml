@@ -1,0 +1,194 @@
+﻿@model IEnumerable<DATN_LEVANLINH.Models.user>
+
+@{
+    ViewBag.Title = "Quanlytaikhoan";
+}
+
+
+<div class="manager-account">
+    <h5>Quản lý tài khoản</h5>
+
+    <div class="change-account ">
+        <p><span style="color:#ef4339;">Chỉnh sửa tài khoản</span></p>
+        <fieldset class="form-group">
+            <label for="name">Tên<span class="error">*</span></label>
+            <input type="text" name="name" id="name" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="full_name">Họ và tên<span class="error">*</span></label>
+            <input type="text" name="full_name" id="full_name" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="address">Địa chỉ<span class="error">*</span></label>
+            <input type="text" name="address" id="address" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="phone">Số điện thoại<span class="error">*</span></label>
+            <input type="text" name="phone" id="phone" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="email">Email<span class="error">*</span></label>
+            <input type="email" name="email" id="email" required="" class="form-control form-control-lg">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="role">Quyền<span class="error">*</span></label>
+            <select name="role" id="role" required="" class="form-control form-control-lg">
+                <option value="1">Quản trị viên</option>
+                <option value="3">Người dùng</option>
+            </select>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="username">Tên đăng nhập<span class="error">*</span></label>
+            <input type="text" name="username" id="username" required="" class="form-control form-control-lg">
+
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="password">Mật khẩu<span class="error">*</span></label>
+            <input type="password" name="password" id="password" required="" class="form-control form-control-lg">
+        </fieldset>
+        <button class="button btn-edit-addr btn btn-primary btn-more" type="submit" ><i class="hoverButton"></i>Chỉnh sửa</button>
+    </div>
+    <div class="manager-account-info">
+        <div class="header-account-info">
+            <div>Tên</div><div>Địa chỉ</div><div>Số điện thoại</div><div>Email</div>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="body-account-info">
+                <div class="account-info-item">
+                    @item.full_name
+                </div>
+                <div class="account-info-item">
+                    @item.address
+                </div>
+                <div class="account-info-item">
+                    @item.phone
+                </div>
+                <div class="account-info-item">
+                    @item.email
+                </div>
+                <div class="account-info-item">
+                    <button class="btchange-account"
+                            data-id="@item.users_id"
+                            data-name="@item.name"
+                            data-fullname="@item.full_name"
+                            data-address="@item.address"
+                            data-phone="@item.phone"
+                            data-email="@item.email"
+                            data-role="@item.role_id"
+                            data-username="@item.user_name"
+                            data-password="@item.password">
+                        Chỉnh sửa
+                    </button>
+                    <button class="btdelete-account"
+                            data-id="@item.users_id"
+                            data-name="@item.name"
+                            data-fullname="@item.full_name"
+                            data-address="@item.address"
+                            data-phone="@item.phone"
+                            data-email="@item.email"
+                            data-role="@item.role_id"
+                            data-username="@item.user_name"
+                            data-password="@item.password">                          
+                        Xóa
+                    </button>
+                </div>
+
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.btchange-account').click(function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+            $('.change-account').css('display', 'block');
+            var userId = null;
+            userId = $(this).data("id");
+            var name = $(this).data('name');
+            var fullName = $(this).data('fullname');
+            var address = $(this).data('address');
+            var phone = $(this).data('phone');
+            var email = $(this).data('email');
+            var role = $(this).data('role');
+            var username = $(this).data('username');
+            var password = $(this).data('password');
+
+            $('#name').val(name);
+            $('#full_name').val(fullName);
+            $('#address').val(address);
+            $('#phone').val(phone);
+            $('#email').val(email);
+            $('#role').val(role);
+            $('#username').val(username);
+            $('#password').val(password);
+
+            $(".btn-edit-addr").on("click", function (e) {
+                e.preventDefault();
+
+                var user = {
+                    users_id: userId,
+                    name: $("#name").val(),
+                    full_name: $("#full_name").val(),
+                    address: $("#address").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                    role_id: $("#role").val(),
+                    user_name: $("#username").val(),
+                    password: $("#password").val()
+                };
+
+                $.ajax({
+                    url: '/Account/ChinhSuaUser', 
+                    type: 'POST', 
+                    contentType: 'application/json',
+                    data: JSON.stringify(user),
+                    success: function (response) {
+                        alert("Chỉnh sửa tài khoản thành công!");
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Có lỗi xảy ra: " + error);
+                    }
+                });
+            });
+        });
+    });
+    $(document).ready(function () {
+        // Khi nhấn vào nút "Xoá"
+        $(".btdelete-account").on("click", function (e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định
+
+            // Lấy userId từ thuộc tính data-id của button
+            var userId = $(this).data("id");
+
+            // Xác nhận trước khi xóa
+            if (confirm("Bạn có chắc chắn muốn xoá tài khoản này?")) {
+                // Gửi yêu cầu DELETE tới API xóa người dùng
+                $.ajax({
+                    url: 'https://localhost:44395/api/default/xoaUser/' + userId, // Đúng đường dẫn API xóa người dùng
+                    type: 'DELETE', // Phương thức DELETE
+                    success: function (response) {
+                        console.log("Phản hồi từ server:", response); // In phản hồi trong console
+                        alert("Xoá tài khoản thành công!");
+                        window.location.reload(); // Reload lại trang sau khi xoá thành công
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Có lỗi xảy ra:", xhr.responseText); // In lỗi trong console
+                        alert("Không thể xóa tài khoản. Vui lòng thử lại.");
+                    }
+                });
+            }
+        });
+    });
+    
+</script>
+
